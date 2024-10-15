@@ -7,10 +7,10 @@ import 'package:bruno/src/components/selectcity/brn_az_listview.dart';
 import 'package:bruno/src/components/selectcity/brn_select_city_model.dart';
 import 'package:bruno/src/components/sugsearch/brn_search_text.dart';
 import 'package:bruno/src/constants/brn_asset_constants.dart';
+import 'package:bruno/src/constants/brn_fonts_constants.dart';
 import 'package:bruno/src/constants/brn_strings_constants.dart';
 import 'package:bruno/src/l10n/brn_intl.dart';
 import 'package:bruno/src/utils/brn_tools.dart';
-import 'package:bruno/src/constants/brn_fonts_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lpinyin/lpinyin.dart';
@@ -90,10 +90,7 @@ class _BrnSingleSelectCityPageState extends State<BrnSingleSelectCityPage> {
   void _loadData() async {
     if (widget.cityList == null || widget.cityList!.isEmpty) {
       //加载城市列表
-      rootBundle
-          .loadString(
-              'packages/${BrnStrings.flutterPackageName}/assets/json/china.json')
-          .then((value) {
+      rootBundle.loadString('packages/${BrnStrings.flutterPackageName}/assets/json/china.json').then((value) {
         Map countyMap = json.decode(value);
         List list = countyMap['china'];
         list.forEach((value) {
@@ -278,21 +275,17 @@ class _BrnSingleSelectCityPageState extends State<BrnSingleSelectCityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: BrnAppBar(title: widget.appBarTitle ?? BrnIntl.of(context).localizedResource.selectCity),
+        appBar: widget.appBarTitle ? BrnAppBar(title: widget.appBarTitle ?? BrnIntl.of(context).localizedResource.selectCity) : null,
         body: Container(
           decoration: BoxDecoration(color: Colors.white),
           child: Column(
             children: <Widget>[
-              widget.locationText.isEmpty
-                  ? const SizedBox.shrink()
-                  : _buildLocationBar(widget.locationText),
+              widget.locationText.isEmpty ? const SizedBox.shrink() : _buildLocationBar(widget.locationText),
               widget.showSearchBar ? _buildSearchBar() : const SizedBox.shrink(),
               Divider(
                 height: .0,
               ),
-              _showCityStack
-                  ? _buildCityList()
-                  : _buildSearchResultList(_searchText),
+              _showCityStack ? _buildCityList() : _buildSearchResultList(_searchText),
             ],
           ),
         ));
@@ -316,8 +309,7 @@ class _BrnSingleSelectCityPageState extends State<BrnSingleSelectCityPage> {
         flex: 1,
         child: AzListView(
           data: _cityList,
-          itemBuilder: (context, model) =>
-              _buildListItem(model as BrnSelectCityModel),
+          itemBuilder: (context, model) => _buildListItem(model as BrnSelectCityModel),
           suspensionWidget: _buildSusWidget(_suspensionTag),
           isUseRealIndex: true,
           itemHeight: _itemHeight,
@@ -334,11 +326,8 @@ class _BrnSingleSelectCityPageState extends State<BrnSingleSelectCityPage> {
               alignment: Alignment.center,
               width: 40.0,
               height: 40.0,
-              decoration: BoxDecoration(
-                  color: Color(0x22222222),
-                  borderRadius: BorderRadius.circular(5.0)),
-              child: Text(hint,
-                  style: TextStyle(color: Colors.white, fontSize: 20.0)),
+              decoration: BoxDecoration(color: Color(0x22222222), borderRadius: BorderRadius.circular(5.0)),
+              child: Text(hint, style: TextStyle(color: Colors.white, fontSize: 20.0)),
             );
           },
         ));
@@ -375,9 +364,7 @@ class _BrnSingleSelectCityPageState extends State<BrnSingleSelectCityPage> {
     List<BrnSelectCityModel> cList = [];
     for (int index = 0; index < _cityList.length; index++) {
       BrnSelectCityModel cInfo = _cityList[index];
-      if (cInfo.name.contains(searchText) ||
-          cInfo.tag.contains(searchText) ||
-          cInfo.tag.contains(searchText.toUpperCase())) {
+      if (cInfo.name.contains(searchText) || cInfo.tag.contains(searchText) || cInfo.tag.contains(searchText.toUpperCase())) {
         cList.add(cInfo);
       }
     }
