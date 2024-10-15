@@ -275,7 +275,7 @@ class _BrnSingleSelectCityPageState extends State<BrnSingleSelectCityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: widget.appBarTitle ? BrnAppBar(title: widget.appBarTitle ?? BrnIntl.of(context).localizedResource.selectCity) : null,
+        appBar: widget.appBarTitle != "" ? BrnAppBar(title: widget.appBarTitle ?? BrnIntl.of(context).localizedResource.selectCity) : null,
         body: Container(
           decoration: BoxDecoration(color: Colors.white),
           child: Column(
