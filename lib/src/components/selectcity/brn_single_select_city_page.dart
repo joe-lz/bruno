@@ -284,6 +284,7 @@ class _BrnSingleSelectCityPageState extends State<BrnSingleSelectCityPage> {
               widget.showSearchBar ? _buildSearchBar() : const SizedBox.shrink(),
               Divider(
                 height: .0,
+                color: Colors.black26,
               ),
               _showCityStack ? _buildCityList() : _buildSearchResultList(_searchText),
             ],
